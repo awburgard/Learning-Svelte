@@ -1,6 +1,7 @@
 <script>
   let result = null;
   let correctAnswer = "b";
+  let answers = ["a", "b", "c", "d"];
 
   function pickAnswer(answer) {
     if (answer === correctAnswer) {
@@ -14,10 +15,11 @@
   {#if result}
     <h4>{result}</h4>
   {:else}
-  <h5>Please choose an answer</h5>
+    <h5>Please choose an answer</h5>
   {/if}
-  <button on:click on:click={() => pickAnswer('a')}>Answer A</button>
-  <button on:click on:click={() => pickAnswer('b')}>Answer B</button>
-  <button on:click on:click={() => pickAnswer('c')}>Answer C</button>
-  <button on:click on:click={() => pickAnswer('d')}>Answer D</button>
+  {#each answers as answer}
+    <button on:click on:click={() => pickAnswer(answer)}>
+      Answer {answer.toUpperCase()}
+    </button>
+  {/each}
 </div>
