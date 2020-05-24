@@ -1,28 +1,23 @@
 <script>
-  let result = "";
-  let correctAnswer = "b"
-  let totalIncome = 0
+  let result = null;
+  let correctAnswer = "b";
 
   function pickAnswer(answer) {
     if (answer === correctAnswer) {
-      return (result = 'Correct!')
+      return (result = "Correct!");
     }
-    result = 'DOH!'
-  }
-
-  function calculateTotalIncome (income){
-    let thirtyPercent = 0.3
-    return (totalIncome = totalIncome * thirtyPercent)
+    result = "DOH!";
   }
 </script>
 
 <div>
-  <h4>{result}</h4>
+  {#if result}
+    <h4>{result}</h4>
+  {:else}
+  <h5>Please choose an answer</h5>
+  {/if}
   <button on:click on:click={() => pickAnswer('a')}>Answer A</button>
   <button on:click on:click={() => pickAnswer('b')}>Answer B</button>
   <button on:click on:click={() => pickAnswer('c')}>Answer C</button>
   <button on:click on:click={() => pickAnswer('d')}>Answer D</button>
-  <input bind:value={totalIncome} type="number" />
-  <button on:click={() => calculateTotalIncome(totalIncome)}>Submit</button>
-  <h4>{totalIncome}</h4>
 </div>
