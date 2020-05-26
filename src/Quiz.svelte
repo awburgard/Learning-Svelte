@@ -11,6 +11,12 @@
   }
 </script>
 
+<style>
+  h4 {
+    color: red;
+  }
+</style>
+
 <div>
   {#if result}
     <h4>{result}</h4>
@@ -18,7 +24,7 @@
     <h5>Please choose an answer</h5>
   {/if}
   {#each answers as answer}
-    <button on:click on:click={() => pickAnswer(answer)}>
+    <button on:click={() => pickAnswer(answer)}>
       Answer {answer.toUpperCase()}
     </button>
   {/each}
