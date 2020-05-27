@@ -1,31 +1,28 @@
 <script>
-  let result = null;
-  let correctAnswer = "b";
-  let answers = ["a", "b", "c", "d"];
+import Question from './Question.svelte'
+  let quiz = getQuiz();
 
-  function pickAnswer(answer) {
-    if (answer === correctAnswer) {
-      return (result = "Correct!");
-    }
-    result = "DOH!";
+  async function getQuiz() {
+    const res = await fetch(
+      "https://opentdb.com/api.php?amount=10&category=21&type=multiple"
+    );
+    const quiz = await res.json();
+    return quiz;
+  }
+
+  function handleClick() {
+    quiz = getQuiz();
   }
 </script>
 
-<style>
-  h4 {
-    color: red;
-  }
-</style>
-
 <div>
-  {#if result}
-    <h4>{result}</h4>
-  {:else}
-    <h5>Please choose an answer</h5>
-  {/if}
-  {#each answers as answer}
-    <button on:click={() => pickAnswer(answer)}>
-      Answer {answer.toUpperCase()}
-    </button>
-  {/each}
+  <button on:click={handleClick}>Get New Question</button>
+
+  {#await quiz}
+    loading...
+  {:then data}
+    {#each data.results as question}
+      <Question {question}/>
+    {/each}
+  {/await}
 </div>
