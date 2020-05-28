@@ -1,13 +1,15 @@
 <script>
   export let question;
+  export let nextQuestion;
+  export let addToScore;
 
   let isCorrect;
   let isAnswered = false;
 
-  let answers = question.incorrect_answers.map(answer => {
+  let answers = question.incorrect_answers.map((answer) => {
     return {
       answer,
-      correct: false
+      correct: false,
     };
   });
 
@@ -15,8 +17,8 @@
     ...answers,
     {
       answer: question.correct_answer,
-      correct: true
-    }
+      correct: true,
+    },
   ];
 
   shuffle(allAnswerrs);
@@ -28,6 +30,9 @@
   function checkQuestion(correct) {
     isAnswered = true;
     isCorrect = correct;
+    if (correct) {
+      addToScore()
+    }
   }
 </script>
 
@@ -36,9 +41,9 @@
 </h3>
 
 {#if isAnswered}
-  <h4>
+  <h5>
     {#if isCorrect}You got it right!{:else}You done goofed!{/if}
-  </h4>
+  </h5>
 {/if}
 
 {#each allAnswerrs as answer}
@@ -46,3 +51,9 @@
     {@html answer.answer}
   </button>
 {/each}
+
+{#if isAnswered}
+  <div>
+    <button on:click={nextQuestion}>Next Question</button>
+  </div>
+{/if}

@@ -1,5 +1,4 @@
 <script>
-  export let name;
   import Quiz from "./Quiz.svelte";
 </script>
 
@@ -26,6 +25,6 @@
 </style>
 
 <main>
-  <h1>Hello {name}!</h1>
-  <Quiz quizName="New Quiz" />
+  <h1>Sports Quiz</h1>
+  <Quiz />
 </main>
