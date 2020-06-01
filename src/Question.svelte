@@ -1,4 +1,7 @@
 <script>
+  import { flip } from "svelte/animate";
+  import { quintOut } from "svelte/easing";
+
   export let question;
   export let nextQuestion;
   export let addToScore;
@@ -31,7 +34,7 @@
     isAnswered = true;
     isCorrect = correct;
     if (correct) {
-      addToScore()
+      addToScore();
     }
   }
 </script>
