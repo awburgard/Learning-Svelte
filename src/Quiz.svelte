@@ -1,5 +1,6 @@
+
 <script>
-  import { fade } from "svelte/transition";
+  import { fade, blur, fly, slide, scale } from "svelte/transition";
   import Question from "./Question.svelte";
   let activeQuestion = 0;
   let score = 0;
@@ -19,29 +20,41 @@
 
   function resetQuiz() {
     score = 0;
+    activeQuestion = 0;
     quiz = getQuiz();
   }
 
   function addToScore() {
     score = score + 1;
   }
+
+  // Reactive Statement
+  $: if (score > 2) {
+    alert("You won!");
+    resetQuiz();
+  }
+
+  // Reactive Declaration
+  $: questionNumber = activeQuestion + 1;
 </script>
 
 <div>
   <button on:click={resetQuiz}>Start New Quiz</button>
 
   <h3>My Score: {score}</h3>
-  <h4>Question #{activeQuestion + 1}</h4>
+  <h4>Question #{questionNumber}</h4>
 
   {#await quiz}
-    loading...
+    Loading....
   {:then data}
+
     {#each data.results as question, index}
       {#if index === activeQuestion}
-        <div in:fade={{delay: 200}} out:fade={{duraation: 200}}>
+        <div in:fade={{delay: 200}} out:fade={{duration: 200}}>
           <Question {addToScore} {nextQuestion} {question} />
         </div>
       {/if}
     {/each}
+
   {/await}
 </div>
