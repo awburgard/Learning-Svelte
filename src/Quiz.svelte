@@ -1,41 +1,40 @@
-
 <script>
-  import { fade, blur, fly, slide, scale } from "svelte/transition";
-  import Question from "./Question.svelte";
-  let activeQuestion = 0;
-  let score = 0;
-  let quiz = getQuiz();
+  import { fade, blur, fly, slide, scale } from 'svelte/transition'
+  import Question from './Question.svelte'
+  let activeQuestion = 0
+  let score = 0
+  let quiz = getQuiz()
 
   async function getQuiz() {
     const res = await fetch(
-      "https://opentdb.com/api.php?amount=10&category=21&type=multiple"
-    );
-    const quiz = await res.json();
-    return quiz;
+      'https://opentdb.com/api.php?amount=10&category=21&type=multiple',
+    )
+    const quiz = await res.json()
+    return quiz
   }
 
   function nextQuestion() {
-    activeQuestion = activeQuestion + 1;
+    activeQuestion = activeQuestion + 1
   }
 
   function resetQuiz() {
-    score = 0;
-    activeQuestion = 0;
-    quiz = getQuiz();
+    score = 0
+    activeQuestion = 0
+    quiz = getQuiz()
   }
 
   function addToScore() {
-    score = score + 1;
+    score = score + 1
   }
 
   // Reactive Statement
-  $: if (score > 2) {
-    alert("You won!");
-    resetQuiz();
+  $: if (score > 7) {
+    alert('You won!')
+    resetQuiz()
   }
 
   // Reactive Declaration
-  $: questionNumber = activeQuestion + 1;
+  $: questionNumber = activeQuestion + 1
 </script>
 
 <div>
@@ -50,7 +49,7 @@
 
     {#each data.results as question, index}
       {#if index === activeQuestion}
-        <div in:fade={{delay: 200}} out:fade={{duration: 200}}>
+        <div in:fade={{ delay: 200 }} out:fade={{ duration: 200 }}>
           <Question {addToScore} {nextQuestion} {question} />
         </div>
       {/if}

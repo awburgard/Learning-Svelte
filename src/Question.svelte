@@ -1,20 +1,20 @@
 <script>
-  import { flip } from "svelte/animate";
-  import { quintOut } from "svelte/easing";
+  import { flip } from 'svelte/animate'
+  import { quintOut } from 'svelte/easing'
 
-  export let question;
-  export let nextQuestion;
-  export let addToScore;
+  export let question
+  export let nextQuestion
+  export let addToScore
 
-  let isCorrect;
-  let isAnswered = false;
+  let isCorrect
+  let isAnswered = false
 
   let answers = question.incorrect_answers.map((answer) => {
     return {
       answer,
       correct: false,
-    };
-  });
+    }
+  })
 
   let allAnswerrs = [
     ...answers,
@@ -22,29 +22,39 @@
       answer: question.correct_answer,
       correct: true,
     },
-  ];
+  ]
 
-  shuffle(allAnswerrs);
+  shuffle(allAnswerrs)
 
   function shuffle(array) {
-    array.sort(() => Math.random() - 0.5);
+    array.sort(() => Math.random() - 0.5)
   }
 
   function checkQuestion(correct) {
-    isAnswered = true;
-    isCorrect = correct;
+    isAnswered = true
+    isCorrect = correct
     if (correct) {
-      addToScore();
+      addToScore()
     }
   }
 </script>
+
+<style>
+  h5 {
+    color: red;
+  }
+
+  h5.isCorrect {
+    color: green;
+  }
+</style>
 
 <h3>
   {@html question.question}
 </h3>
 
 {#if isAnswered}
-  <h5>
+  <h5 class:isCorrect>
     {#if isCorrect}You got it right!{:else}You done goofed!{/if}
   </h5>
 {/if}
