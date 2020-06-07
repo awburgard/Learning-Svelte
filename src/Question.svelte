@@ -1,40 +1,40 @@
 <script>
-  import { flip } from 'svelte/animate'
-  import { quintOut } from 'svelte/easing'
+  import { flip } from "svelte/animate";
+  import { quintOut } from "svelte/easing";
 
-  export let question
-  export let nextQuestion
-  export let addToScore
+  import { score } from "./store.js";
+  export let question;
+  export let nextQuestion;
 
-  let isCorrect
-  let isAnswered = false
+  let isCorrect;
+  let isAnswered = false;
 
-  let answers = question.incorrect_answers.map((answer) => {
+  let answers = question.incorrect_answers.map(answer => {
     return {
       answer,
-      correct: false,
-    }
-  })
+      correct: false
+    };
+  });
 
   let allAnswerrs = [
     ...answers,
     {
       answer: question.correct_answer,
-      correct: true,
-    },
-  ]
+      correct: true
+    }
+  ];
 
-  shuffle(allAnswerrs)
+  shuffle(allAnswerrs);
 
   function shuffle(array) {
-    array.sort(() => Math.random() - 0.5)
+    array.sort(() => Math.random() - 0.5);
   }
 
   function checkQuestion(correct) {
-    isAnswered = true
-    isCorrect = correct
+    isAnswered = true;
+    isCorrect = correct;
     if (correct) {
-      addToScore()
+      score.update(val => val + 1);
     }
   }
 </script>
